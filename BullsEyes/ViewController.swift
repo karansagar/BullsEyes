@@ -11,31 +11,39 @@ import UIKit
 class ViewController: UIViewController {
    
     //this is connected to slider
-    var valueChanged:Int = 0
+    var currentValue = 0
     
     
     //To save a Slider Value .. outlet connected
     @IBOutlet weak var slider:UISlider!
-    var targerValue:Int = 0
+    var targetValue = 0
     
+    //this is the lable outlet for the random number between 0 to 100
     @IBOutlet weak var targetValLabel: UILabel!
+    
+    //Save User's score
+    var score = 0
+    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        valueChanged = lroundf(slider.value)
+        currentValue = lroundf(slider.value)
         startNewRound()
 }
     
+    //Update the numbers of the outlets on viewDidLoad or Hit Button Pressed
     func updatedLables()  {
-        targetValLabel.text = String(targerValue)
+        targetValLabel.text = String(targetValue)
     }
     
     func startNewRound() {
-        targerValue =  1 + Int(arc4random_uniform(100))
-        valueChanged = 50
-        slider.value = Float(valueChanged)
+        targetValue =  1 + Int(arc4random_uniform(100))
+        currentValue = 50
+        slider.value = Float(currentValue)
+        
+        // Added func on Func
         updatedLables()
 
     }
@@ -50,12 +58,28 @@ class ViewController: UIViewController {
     @IBAction func sliderMoved(_ slider:UISlider) {
         print("Value of the slider is now : \(slider.value)")
         
-        valueChanged = lroundf(slider.value)
+        currentValue = lroundf(slider.value)
     }
     
     @IBAction func showAlert() {
+        let difference = abs(targetValue - currentValue)
+        let points = 100 - difference
         
-        let message = "the value of the slider was : \(valueChanged)" + "\nThe Target Value is:\(targerValue) "
+        
+//        var difference:Int = currentValue - targetValue
+//        if difference < 0 {
+//            difference = difference * -1
+//        }
+        //----// Another Way //----//
+//        if currentValue > targetValue {
+//            difference = currentValue - targetValue
+//        } else if targetValue > currentValue {
+//            difference = targetValue - currentValue
+//        } else {
+//            difference = 0
+//        }
+    
+        let message = "You Scored \(points) points"
         
         let alert = UIAlertController(title: "Hello World!", message: message, preferredStyle: .alert)
         let action = UIAlertAction(title: "Awesome!", style: .default, handler: nil)
