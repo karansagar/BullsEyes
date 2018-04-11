@@ -12,33 +12,43 @@ class ViewController: UIViewController {
    
     //this is connected to slider
     var currentValue = 0
-    
-    
     //To save a Slider Value .. outlet connected
     @IBOutlet weak var slider:UISlider!
+ 
     var targetValue = 0
-    
     //this is the lable outlet for the random number between 0 to 100
     @IBOutlet weak var targetValLabel: UILabel!
     
     //Save User's score
     var score = 0
+    //Show user Score Outletcongiguration
+    @IBOutlet weak var scoreLabel:UILabel!
     
-    
-    
+    //Keep track of Rounds
+    var rounds = 0
+    @IBOutlet weak var roundLabel:UILabel!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         currentValue = lroundf(slider.value)
         startNewRound()
+        
+        
 }
     
     //Update the numbers of the outlets on viewDidLoad or Hit Button Pressed
     func updatedLables()  {
         targetValLabel.text = String(targetValue)
+        scoreLabel.text = String(score)
+        roundLabel.text = String(rounds)
+        
     }
     
     func startNewRound() {
+        
+        rounds += 1
+        
         targetValue =  1 + Int(arc4random_uniform(100))
         currentValue = 50
         slider.value = Float(currentValue)
@@ -63,7 +73,11 @@ class ViewController: UIViewController {
     
     @IBAction func showAlert() {
         let difference = abs(targetValue - currentValue)
-        let points = 100 - difference
+        var points = 100 - difference
+        
+        
+        
+        scoreLabel.text = String(score)
         
         
 //        var difference:Int = currentValue - targetValue
@@ -78,10 +92,29 @@ class ViewController: UIViewController {
 //        } else {
 //            difference = 0
 //        }
-    
+        
+        let title:String
+        if difference == 0 {
+            title = "Perfect !"
+            points += 100
+        } else if difference < 5 {
+            title = "You had it!\(Int(slider.value))"
+            if difference == 1 {
+                points += 50
+            }
+        } else if difference < 10 {
+            title = "you did pretty good !"
+        } else {
+            title = "Whatever Huh ! : \(Int(slider.value))"
+        }
+        
+        //save Score
+        score += points // score = score + points
+        
+        
         let message = "You Scored \(points) points"
         
-        let alert = UIAlertController(title: "Hello World!", message: message, preferredStyle: .alert)
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let action = UIAlertAction(title: "Awesome!", style: .default, handler: nil)
         
         alert.addAction(action)
