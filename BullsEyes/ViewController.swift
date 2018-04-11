@@ -32,10 +32,18 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         currentValue = lroundf(slider.value)
-        startNewRound()
+        startNewGame()
         
         
 }
+    
+    //Start new round
+    @IBAction func startNewGame()  {
+        score = 0
+        rounds = 0
+        startNewRound()
+    }
+    
     
     //Update the numbers of the outlets on viewDidLoad or Hit Button Pressed
     func updatedLables()  {
@@ -115,14 +123,16 @@ class ViewController: UIViewController {
         let message = "You Scored \(points) points"
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let action = UIAlertAction(title: "Awesome!", style: .default, handler: nil)
+        let action = UIAlertAction(title: "Awesome!", style: .default, handler: {
+            action in
+            self.startNewRound()
+        })
         
         alert.addAction(action)
         present(alert, animated: true, completion: nil)
-        startNewRound()
-        
     }
     
+    //
     
 
 
