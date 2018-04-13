@@ -34,6 +34,32 @@ class ViewController: UIViewController {
         currentValue = lroundf(slider.value)
         startNewGame()
         
+        let thumbImageNormal = #imageLiteral(resourceName: "SliderThumb-Normal") // UIImage(named: "SliderThumb-Normal")
+        slider.setThumbImage(thumbImageNormal, for: .normal)
+        
+        let thumbImageHighlighted = #imageLiteral(resourceName: "SliderThumb-Highlighted") // UIImage(named: "SliderThumb-Highlighted")
+        slider.setThumbImage(thumbImageHighlighted, for: .highlighted)
+        
+        let insets = UIEdgeInsets(top: 0, left: 14, bottom: 0, right: 14)
+        
+        let trackImageLeft = #imageLiteral(resourceName: "SliderTrackLeft") // UIImage(named: "SliderTrackLeft")
+        let trackLeftResizeable = trackImageLeft.resizableImage(withCapInsets: insets)
+        slider.setMinimumTrackImage(trackLeftResizeable, for: .normal)
+        
+        let trackImageRight = #imageLiteral(resourceName: "SliderTrackRight")  // UIImage(named: "SliderTrackRight")
+        let trackRightResizeable = trackImageRight.resizableImage(withCapInsets: insets)
+        slider.setMaximumTrackImage(trackRightResizeable, for: .normal)
+        
+        
+        // Style with HTML but will skip for now
+        /*
+         
+        if let url = Bundle.main.path(forResource: "BullsEye", ofType: "html") {
+            let htmlUrl = URL(fileURLWithPath: url)
+            let req = URLRequest(url: htmlUrl)
+            webView.load(req)
+        }
+        */
         
 }
     
